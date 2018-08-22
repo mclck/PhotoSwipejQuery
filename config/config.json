@@ -1,0 +1,18 @@
+{
+    "PROJECT": {
+        "BASE": "app",
+        "SOURCE": "src",
+        "CSS": "css",
+        "JS": "js",
+        "SUFFIX": "min"
+    },
+    "SASS": "sass",
+    "JS": "js",
+    "BROWSER_SYNC": "bs",
+    "WATCHER": "watch",
+    "ICONS": "icons",
+    "NAMES": {
+        "JS": "main",
+        "CSS": "main"
+    }
+}
