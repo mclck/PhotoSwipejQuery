@@ -18,14 +18,15 @@ let PhotoSwipeUI_Default = require('./helpers/photoswipe-ui-default'),
         showHideOpacity: true,
         history: true,
         focus: true,
-        bgOpacity: .2,
+        bgOpacity: .6,
         captionEl: true,
         fullscreenEl: false,
         zoomEl: false,
         shareEl: false,
         counterEl: false,
-        arrowEl: false,
+        arrowEl: true,
         preloaderEl: true,
+        barsSize: {top:44, bottom:'auto'}
     };
 
 $(window).on('load', () => {
@@ -33,6 +34,8 @@ $(window).on('load', () => {
         items,
         options
     });
+
+    
     items = {},
         options = {};
     $('#gallery2').PhotoSwipeFromDOM(PhotoSwipeUI_Default, {});

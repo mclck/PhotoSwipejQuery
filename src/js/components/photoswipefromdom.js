@@ -14,6 +14,10 @@ const PhotoSwipeFromDOM = (($) => {
             super(PhotoSwipeElement, PhotoSwipeUI_Default, items, options);
         }
 
+        makeThubNails() {
+            
+        }
+
         static _jQueryInterface(PhotoSwipeUI_Default, params) {
             const $container = $(this);
             $container.each((index, element) => {
