@@ -14,6 +14,17 @@ const PhotoSwipeFromDOM = (($) => {
             super(PhotoSwipeElement, PhotoSwipeUI_Default, items, options);
         }
 
+        makeThumbNails() {
+            this._thumbsContainer = $(this.container).find('.pswp__thumbs');
+            $.each(this.items, (index, item) => {
+                this._thumbsContainer.append(
+                    `<div class="pswp__thumb">
+                        <img src="${item.thumb}"/>
+                    </div>`
+                );
+            });
+        }
+
         static _jQueryInterface(PhotoSwipeUI_Default, params) {
             const $container = $(this);
             $container.each((index, element) => {
@@ -25,6 +36,7 @@ const PhotoSwipeFromDOM = (($) => {
                     thumbnail.dataset.pswpIndex = index;
                     items.push({
                         src: thumbnail.href,
+                        thumb: thumbnail.dataset.thumb,
                         w: thumbnail.dataset.size.length ? +JSON.parse(thumbnail.dataset.size).w : 0,
                         h: thumbnail.dataset.size.length ? +JSON.parse(thumbnail.dataset.size).h : 0,
                     });
@@ -47,9 +59,10 @@ const PhotoSwipeFromDOM = (($) => {
                         index: +event.currentTarget.dataset.pswpIndex,
                     });
                     Template.each((index, template) => {
-                        let data = Template.data(DATA_KEY)
-                        data = new PhotoSwipeFromDOM(template, PhotoSwipeUI_Default, items, options).init();
-                        Template.data(DATA_KEY, data);
+                        let pswp = Template.data(DATA_KEY);
+                        pswp = new PhotoSwipeFromDOM(template, PhotoSwipeUI_Default, items, options);
+                        Template.data(DATA_KEY, pswp);
+                        pswp.init();
                     })
                 });
                 ROOT_CONTAINER.append(Template);

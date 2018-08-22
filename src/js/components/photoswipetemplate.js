@@ -8,6 +8,7 @@ const PhotoSwipeTemplate = (($) => {
                                             <div class="pswp__item"></div>
                                             <div class="pswp__item"></div>
                                             <div class="pswp__item"></div>
+                                            <div class="pswp__thumbs"></div>
                                         </div>
                                         <div class="pswp__ui pswp__ui--hidden">
                                             <div class="pswp__top-bar">
