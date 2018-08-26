@@ -1,9 +1,31 @@
-.pswp__top-bar {
-    background-color: transparent;
-}
-
-.pswp__ui--fit {
-    .pswp__top-bar {
+.pswp {
+    &__top-bar {
         background-color: transparent;
+    }
+    &__ui--fit {
+        .pswp__top-bar {
+            background-color: transparent;
+        }
+    }
+    &__thumbs {
+        position: absolute;
+        width: 100%;
+        display: flex;
+        bottom: 10px;
+        align-items: center;
+        justify-content: center;
+    }
+    &__thumb {
+        display: none;
+        height: 100px;
+        justify-content: center;
+        flex: .1 1 10%;
+        &.is-active {
+            display: flex !important;
+        }
+        img {
+            display: block;
+            height: 100%;
+        }
     }
 }

@@ -15,13 +15,26 @@ const PhotoSwipeFromDOM = (($) => {
         }
 
         makeThumbNails() {
-            this._thumbsContainer = $(this.container).find('.pswp__thumbs');
+            this._thumbsContainer = $(this.template).find('.pswp__thumbs');
             $.each(this.items, (index, item) => {
-                this._thumbsContainer.append(
-                    `<div class="pswp__thumb">
+                !item.index && (item.index = index);
+                let $thumb = $(
+                    `<a href="javascript:void(0)" class="pswp__thumb" data-pswp-thumb-index="${index}">
                         <img src="${item.thumb}"/>
-                    </div>`
+                    </a>`
                 );
+                $thumb.on('click', (event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    this.goTo(+event.currentTarget.dataset.pswpThumbIndex);
+                });
+                this._thumbsContainer.append($thumb);
+                $thumb.addClass('is-active').hide().fadeIn();
+                this.listen('close', () => {
+                    $thumb.fadeOut(() => {
+                        $thumb.remove();
+                    });
+                });
             });
         }
 
@@ -39,12 +52,13 @@ const PhotoSwipeFromDOM = (($) => {
                         thumb: thumbnail.dataset.thumb,
                         w: thumbnail.dataset.size.length ? +JSON.parse(thumbnail.dataset.size).w : 0,
                         h: thumbnail.dataset.size.length ? +JSON.parse(thumbnail.dataset.size).h : 0,
+                        index: index,
                     });
                 });
                 params.items && (items = items.concat(params.items));
                 thumbNails.on('click', (event) => {
                     event.preventDefault();
-                    let image = $(event.currentTarget).find('img');
+                    /* let image = $(event.currentTarget).find('img');
                     image.length && (options = {
                         getThumbBoundsFn: () => {
                             let rect = image[0].getBoundingClientRect();
@@ -54,7 +68,7 @@ const PhotoSwipeFromDOM = (($) => {
                                 w: rect.width
                             };
                         }
-                    });
+                    }); */
                     options = $.extend({}, options, params.options, {
                         index: +event.currentTarget.dataset.pswpIndex,
                     });
@@ -63,6 +77,7 @@ const PhotoSwipeFromDOM = (($) => {
                         pswp = new PhotoSwipeFromDOM(template, PhotoSwipeUI_Default, items, options);
                         Template.data(DATA_KEY, pswp);
                         pswp.init();
+                        pswp.makeThumbNails();
                     })
                 });
                 ROOT_CONTAINER.append(Template);
