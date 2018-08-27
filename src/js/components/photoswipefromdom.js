@@ -2,6 +2,7 @@
 
 let PhotoSwipe = require('./photoswipe');
 let PhotoSwipeTemplate = require('./photoswipetemplate');
+let PhotoSwipeUI = require('../helpers/photoswipe-ui-default')
 
 const PhotoSwipeFromDOM = (($) => {
     const NAME = 'PhotoSwipeFromDOM';
@@ -38,7 +39,7 @@ const PhotoSwipeFromDOM = (($) => {
             });
         }
 
-        static _jQueryInterface(PhotoSwipeUI_Default, params) {
+        static _jQueryInterface(params) {
             const $container = $(this);
             $container.each((index, element) => {
                 let items = [];
@@ -46,14 +47,19 @@ const PhotoSwipeFromDOM = (($) => {
                 let Template = new PhotoSwipeTemplate();
                 let options = {};
                 thumbNails.each((index, thumbnail) => {
+                    console.log('WoWO');
                     thumbnail.dataset.pswpIndex = index;
-                    items.push({
-                        src: thumbnail.href,
-                        thumb: thumbnail.dataset.thumb,
-                        w: thumbnail.dataset.size.length ? +JSON.parse(thumbnail.dataset.size).w : 0,
-                        h: thumbnail.dataset.size.length ? +JSON.parse(thumbnail.dataset.size).h : 0,
-                        index: index,
-                    });
+                    let image = new Image();
+                    image.onload = (event) => {
+                        items.push({
+                            src: thumbnail.href,
+                            thumb: thumbnail.dataset.thumb.length ? thumbnail.dataset.thumb : thumbnail.href,
+                            w: event.path[0].width,
+                            h: event.path[0].height,
+                            index: index,
+                        });
+                    }
+                    image.src = thumbnail.href;
                 });
                 params.items && (items = items.concat(params.items));
                 thumbNails.on('click', (event) => {
@@ -74,7 +80,7 @@ const PhotoSwipeFromDOM = (($) => {
                     });
                     Template.each((index, template) => {
                         let pswp = Template.data(DATA_KEY);
-                        pswp = new PhotoSwipeFromDOM(template, PhotoSwipeUI_Default, items, options);
+                        pswp = new PhotoSwipeFromDOM(template, PhotoSwipeUI, items, options);
                         Template.data(DATA_KEY, pswp);
                         pswp.init();
                         pswp.makeThumbNails();

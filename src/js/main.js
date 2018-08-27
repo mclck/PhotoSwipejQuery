@@ -2,8 +2,7 @@
 
 require('./components/photoswipefromdom')
 
-let PhotoSwipeUI_Default = require('./helpers/photoswipe-ui-default'),
-    items = [{
+let items = [{
         src: 'https://t4.ftcdn.net/jpg/01/78/23/95/500_F_178239568_7U2hZQu1RkdKnzChuhdEsMeXmuYBKKNI.jpg',
         thumb: 'https://t4.ftcdn.net/jpg/01/78/23/95/500_F_178239568_7U2hZQu1RkdKnzChuhdEsMeXmuYBKKNI.jpg',
         w: 500,
@@ -26,11 +25,11 @@ let PhotoSwipeUI_Default = require('./helpers/photoswipe-ui-default'),
     };
 
 $(window).on('load', () => {
-    $('#gallery').PhotoSwipeFromDOM(PhotoSwipeUI_Default, {
+    $('#gallery').PhotoSwipeFromDOM({
         items,
         options
     });
     items = {},
         options = {};
-    $('#gallery2').PhotoSwipeFromDOM(PhotoSwipeUI_Default, {});
+    $('#gallery2').PhotoSwipeFromDOM({});
 });

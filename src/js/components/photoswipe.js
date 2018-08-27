@@ -3,6 +3,7 @@
 window.jQuery = window.$ = require('jquery');
 let PhotoSwipeDefaultClass = require('photoswipe');
 let PhotoSwipeTemplate = require('./photoswipetemplate');
+let PhotoSwipeUI = require('../helpers/photoswipe-ui-default')
 
 const PhotoSwipe = (($) => {
 
@@ -25,12 +26,12 @@ const PhotoSwipe = (($) => {
         static get VERSION() {
             return VERSION;
         }
-        static _jQueryInterface(PhotoSwipeUI_Default, items = {}, options = {}) {
+        static _jQueryInterface(items = {}, options = {}) {
             return (() => {
                 let data = PhotoSwipeTemplate.data(DATA_KEY)
                 if (!data) {
                     $('body').append(PhotoSwipeTemplate);
-                    data = new PhotoSwipe(PhotoSwipeTemplate[0], PhotoSwipeUI_Default, items, options);
+                    data = new PhotoSwipe(PhotoSwipeTemplate[0], PhotoSwipeUI, items, options);
                     PhotoSwipeTemplate.data(DATA_KEY, data);
                 }
             })();
